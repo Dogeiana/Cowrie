@@ -128,9 +128,9 @@ echo "Cowrie honeypot is ready to go! Do you want to start the honeypot?"
 read -e -p "Start Honeypot? [Y/n]:" honeypot
     if [[ $honeypot == [Yy]* ]]; then
         cd
-        bash /cowrie/bin/cowrie start
+        bash cowrie/bin/cowrie start
     else
-    echo "You can start the honeypot in /cowrie/bin/cowrie."
-    exit
+    	echo "You can start the honeypot in /cowrie/bin/cowrie."
+    	exit
     fi
 done
