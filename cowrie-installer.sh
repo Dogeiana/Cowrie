@@ -97,7 +97,7 @@ cat /etc/passwd | grep -q $user
 while [ $? -eq 0 ] do
     echo "That user already exist!"
     read -e -p "Username:" user
-    grep -q $user cat /etc/passwd
+    cat /etc/passwd | grep -q $user
 done
 sudo adduser --disabled-password $user
 echo "$user Created!"
