@@ -56,7 +56,9 @@ fi
 
 ssh_port=$(cat /etc/ssh/sshd_config | grep Port | grep -Eo [0-9]+)
 if [[ $ssh_port == 22 ]]; then
-        echo "Your SSH port is 22, Please change it"
+        echo "╔════════════════════════╗"          #thicc
+        echo -e "║\033[0;31mError\033[0m: \033[32;5mSSH Port is 22!  \033[0m║"
+        echo "╚════════════════════════╝"        
         exit
 else [[ $ssh_port -ne 22 ]];
         echo "Moving on…"
@@ -88,8 +90,10 @@ read -e -p "Install Cowrie? [Y/n]:" cowrie
         echo "Exiting..."
         exit
     fi
+echo "Make a user for cowrie honeypot."
+echo ""
 read -e -p "Username:" user
-grep -q $user cat /etc/passwd
+cat /etc/passwd | grep -q $user
 while [ $? -eq 0 ] do
     echo "That user already exist!"
     read -e -p "Username:" user
@@ -125,12 +129,13 @@ read -e -p "Hostname:" hostname
     iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 2222
     clear
 echo "Cowrie honeypot is ready to go! Do you want to start the honeypot?"
+echo ""
 read -e -p "Start Honeypot? [Y/n]:" honeypot
     if [[ $honeypot == [Yy]* ]]; then
         cd
-        bash cowrie/bin/cowrie start
+        bash /cowrie/bin/cowrie start
     else
-    	echo "You can start the honeypot in /cowrie/bin/cowrie."
-    	exit
+        echo "You can start the honeypot in /cowrie/bin/cowrie."
+        exit
     fi
 done
